@@ -1,0 +1,74 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Roll No Search</title>
+  <style>
+    body {
+      background: black;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .search-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .label {
+      font-size: 24px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .arrow {
+      font-size: 24px;
+      margin-right: 10px;
+    }
+
+    .input-roll {
+      padding: 10px 20px;
+      font-size: 20px;
+      border: 2px solid #0ff;
+      outline: none;
+      border-radius: 10px;
+      background: transparent;
+      color: white;
+      animation: glow 1s infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        border-color: #0ff;
+        box-shadow: 0 0 5px #0ff;
+      }
+      100% {
+        border-color: #0f0;
+        box-shadow: 0 0 20px #0f0;
+      }
+    }
+
+    .search-button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-left: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="search-container">
+    <div class="label">Roll_No</div>
+    <div class="arrow">➜</div>
+    <input type="text" class="input-roll" placeholder="Enter Roll No">
+    <button class="search-button">Search</button>
+  </div>
+
+</body>
+</html>

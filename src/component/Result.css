@@ -1,0 +1,77 @@
+.num {
+    font-size: 30px;
+    color: aliceblue;
+}
+
+.input {
+    padding: 10px;
+    font-size: 18px;
+    border: 2px solid #0ff;
+    border-radius: 10px;
+    background: transparent;
+    color: white;
+    animation: glow 1s infinite alternate;
+}
+
+@keyframes glow {
+    0% {
+        border-color: #0ff;
+        box-shadow: 0 0 5px #0ff;
+    }
+
+    100% {
+        border-color: #0f0;
+        box-shadow: 0 0 20px #0f0;
+    }
+}
+
+
+.label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.roll {
+    padding: 10px 25px;
+    background: #0ff;
+    border: none;
+    color: black;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+
+    .col {
+      position: absolute;
+      white-space: nowrap;
+      top: 80%;
+      left: 0;
+      color: white;
+      font-size: 30px;
+      animation: move 5s infinite alternate ease-in-out;
+    }
+
+    @keyframes move {
+      0% {transform: translateX(0%);}
+      100% {transform: translateX(calc(100vw - 105%));}
+    }
+
+    .check {
+      position: absolute;
+      white-space: nowrap;
+      top: 70%;
+      left: 0;
+      color: white;
+      font-size: 30px;
+      animation: move 5s infinite alternate ease-in-out;
+    }
+
+    @keyframes move {
+      0% {transform: translateX(0%);}
+      100% {transform: translateX(calc(100vw - 105%));}
+    }

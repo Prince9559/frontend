@@ -15,7 +15,8 @@ function Font() {
   const handleSubmit = async (e) => {
     
     e.preventDefault();
-    const response = await fetch('http://localhost:5000/api/books', {
+    const response = await fetch('http://localhost:5000/api/books', 
+    {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -25,6 +26,7 @@ function Font() {
 
     const result = await response.json();
     alert(result.message);
+    
   };
 
   return (
@@ -40,13 +42,13 @@ function Font() {
 
       <label>
         <b>Subject ➞</b>
-        <input type="text"name="subject"value={formData.subject}onChange={handleChange}required/>
+        <input type="text"name="subject"value={formData.subject}onChange={handleChange}required />
       </label>
 
       <br /><br />
       <label>
         <b>Price ➞</b>
-        <input type="number"name="price"value={formData.price}onChange={handleChange}required/>
+        <input type="number"name="price"value={formData.price}onChange={handleChange}required />
       </label>
       
       <br /><br />
