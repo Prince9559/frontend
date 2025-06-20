@@ -62,11 +62,12 @@ let show = `<table class="table" border='1'><tr><td>Roll_no</td><td>Name</td><td
   };
 
   return (
-    <div>
+    <div class="box">
 
-        <h1>{setData}</h1>
+  
+      <h1>{setData}</h1>
 
-      <form onSubmit={handleSubmit} style={{ background: 'rgba(0, 0, 0, 0.96)', height: "534px",marginTop:"-28px" }}>
+      <form onSubmit={handleSubmit}>
 
         <h2 className="check">😊 PLEASE CHECK RESULT 😔</h2>
 
