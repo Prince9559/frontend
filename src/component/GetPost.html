@@ -1,74 +1,180 @@
  <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Roll No Search</title>
-  <style>
-    body {
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Table with Patakha Animation on Load</title>
+<style>
+  .table {
+    width: 90%;
+    margin: 19px auto;
+    border-collapse: collapse;
+    font-size: 18px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+    background-color: #111;
+    color: #0ff;
+    animation: glow 1s infinite alternate;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+  }
 
-    .search-container {
-      display: flex;
-      align-items: center;
-    }
+  .table th, .table td {
+    border: 1px solid #0ff;
+    padding: 12px 15px;
+    text-align: center;
+  }
 
-    .label {
-      font-size: 24px;
-      font-weight: bold;
-      margin-right: 10px;
-    }
+  .table th {
+    background-color: #0ff;
+    color: black;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
-    .arrow {
-      font-size: 24px;
-      margin-right: 10px;
-    }
+  .table tr:nth-child(even) {
+    background-color: rgba(0, 255, 255, 0.1);
+  }
 
-    .input-roll {
-      padding: 10px 20px;
-      font-size: 20px;
-      border: 2px solid #0ff;
-      outline: none;
-      border-radius: 10px;
-      background: transparent;
-      color: white;
-      animation: glow 1s infinite alternate;
-    }
+  .table tr:hover {
+    background-color: rgba(0, 255, 255, 0.2);
+    cursor: pointer;
+  }
 
-    @keyframes glow {
-      0% {
-        border-color: #0ff;
-        box-shadow: 0 0 5px #0ff;
-      }
-      100% {
-        border-color: #0f0;
-        box-shadow: 0 0 20px #0f0;
-      }
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 10px #0ff;
     }
+    to {
+      box-shadow: 0 0 20px #0ff;
+    }
+  }
 
-    .search-button {
-      padding: 10px 15px;
-      font-size: 16px;
-      margin-left: 5px;
-      cursor: pointer;
-    }
-  </style>
+  /* Canvas style for fireworks */
+  #fireworksCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+  }
+</style>
 </head>
 <body>
 
-  <div class="search-container">
-    <div class="label">Roll_No</div>
-    <div class="arrow">➜</div>
-    <input type="text" class="input-roll" placeholder="Enter Roll No">
-    <button class="search-button">Search</button>
-  </div>
+<table class="table">
+  <thead>
+    <tr><th>Roll_no</th><th>Name</th><th>Marks</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>1</td><td>Prince</td><td>95</td></tr>
+    <tr><td>2</td><td>Rahul</td><td>89</td></tr>
+    <tr><td>3</td><td>Priya</td><td>92</td></tr>
+  </tbody>
+</table>
+
+<canvas id="fireworksCanvas"></canvas>
+
+<script>
+  const canvas = document.getElementById('fireworksCanvas');
+  const ctx = canvas.getContext('2d');
+  let W, H;
+
+  function resize() {
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function random(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  class Particle {
+    constructor(x, y, color) {
+      this.x = x;
+      this.y = y;
+      this.radius = random(2, 4);
+      this.color = color;
+      this.speedX = random(-5, 5);
+      this.speedY = random(-5, 5);
+      this.alpha = 1;
+      this.gravity = 0.05;
+    }
+
+    update() {
+      this.speedY += this.gravity;
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.alpha -= 0.02;
+    }
+
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = this.alpha;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color;
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.closePath();
+      ctx.restore();
+    }
+  }
+
+  let particles = [];
+
+  function createFirework(x, y) {
+    const colors = ['#ff0043', '#14fc56', '#1e90ff', '#ffa500', '#ff66ff', '#00ffff'];
+    for(let i = 0; i < 50; i++) {
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      particles.push(new Particle(x, y, color));
+    }
+  }
+
+  // Animate fireworks randomly across the screen on page load
+  function startFireworks() {
+    let count = 0;
+    const interval = setInterval(() => {
+      if (count > 10) {  // 10 fireworks then stop
+        clearInterval(interval);
+        return;
+      }
+      const x = random(100, W - 100);
+      const y = random(100, H / 2);
+      createFirework(x, y);
+      count++;
+    }, 500);
+  }
+
+  function animate() {
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.fillRect(0, 0, W, H);
+
+    for(let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      if(p.alpha <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+      p.update();
+      p.draw();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+  startFireworks();
+</script>
 
 </body>
 </html>

@@ -37,39 +37,59 @@ function Result() {
 
     const result = await response.json();
     let x = JSON.parse(result.message);
-    let name = x[0]["name"];
-    let rollno = x[0]["roll_no"];
-    let java = x[0]["java"];
-    let python = x[0]["python"];
-    let show = `RollNo=${rollno} ,Name=${name} ,Java=${java} ,Python=${python}`;
+    let name = x[0]["Name"];
+    let rollno = x[0]["Roll_No"];
+    let java = x[0]["Java"];
+    let python = x[0]["Python"];
+    let c = x[0]["C"];
+    let cpp = x[0]["C++"];
+    let father = x[0]["Father_Name"];
 
+  let total = (java) + (python) + (c) + (cpp);
+
+  let persent=(total)/4;
+
+
+let show = `<table class="table" border='1'><tr><td>Roll_no</td><td>Name</td><td>Father_Name</td><td>Java</td><td>Python</td>
+<td>C</td><td>C++</td><td>Total</td><td>Persent</td></tr>`;
+
+    show += `<tr><td>${rollno}</td><td>${name}</td><td>${father}</td><td>${java}</td><td>${python}</td>
+    <td>${c}</td><td>${cpp}</td><td>${total}</td><td>${persent}%</td></tr></table>`;
+
+    document.getElementById("d").innerHTML = show;
     setData(show);
+
   };
 
   return (
     <div>
-      <h1>{data}</h1>
 
-      <form onSubmit={handleSubmit} style={{ background: 'black', height: "510px" }}>
+        <h1>{setData}</h1>
 
-  <h2 className="check">😊 CHECK RESULT 😔</h2>
+      <form onSubmit={handleSubmit} style={{ background: 'rgba(0, 0, 0, 0.96)', height: "534px",marginTop:"-28px" }}>
 
-    <h2 class="col">😊 फेल हुआ तो पापा मारेंगे... डर तो पापा से है 😔</h2>
-  
+        <h2 className="check">😊 PLEASE CHECK RESULT 😔</h2>
 
+        <h2 class="col">😀 फेल हुए तो पापा आटो दिला देंगे... 😅</h2>
 
         <label className="label">
 
           <b className="num">Roll_No</b>
 
           <input className="input" type="number" name="roll_no" placeholder="Enter Roll_No.." value={formDetail.roll_no} onChange={handleChange} required />
+ 
+         
 
+          <button className="roll" type="submit">Submit</button>
 
-<button className="roll" type="submit">Submit</button>
-        
-      </label>
+        </label>
+
+      <br></br>
+      <br></br>
+       <div id="d"></div>
 
       </form>
+
     </div>
   )
 
